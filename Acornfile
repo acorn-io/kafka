@@ -1,0 +1,70 @@
+name:        "Kafka Acorn"
+description: "Acorn providing Kafka"
+readme:      "./README.md"
+info:        localData.info
+icon:        "./icon.png"
+
+args: {
+		topic: "mytopic"
+}
+
+services: broker: {
+	default:   true
+	generated: job: "setup"
+}
+
+containers: kafka: {
+	name:        "Kafka"
+	description: "Container running a Kafka server"
+	image:       "bitnami/kafka:3.4.1"
+	ports: publish:          "9092/tcp"
+	env: {
+    "KAFKA_CFG_NODE_ID": "0"
+    "KAFKA_CFG_PROCESS_ROLES": "controller,broker"
+    "KAFKA_CFG_LISTENERS": "PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094"
+    "KAFKA_CFG_ADVERTISED_LISTENERS": "PLAINTEXT://kafka:9092,EXTERNAL://:9094"
+	  "KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP": "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+    "KAFKA_CFG_CONTROLLER_QUORUM_VOTERS": "0@kafka:9093"
+    "KAFKA_CFG_CONTROLLER_LISTENER_NAMES": "CONTROLLER"
+	}
+	probes: [
+		{
+			type:                "readiness"
+			initialDelaySeconds: 5
+			timeoutSeconds:      5
+			tcp: {
+				url: "tcp://localhost:9092"
+			}
+		},
+	]
+}
+
+jobs: setup: {
+	name:  "configure Kafka server"
+	image: "bitnami/kafka:3.4.1"
+	dirs: "/acorn/scripts/": "./scripts"
+	dependsOn: ["kafka"]
+	entrypoint: ["/acorn/scripts/init.sh"]
+	env: {
+		TOPIC: args.topic
+	}
+	events: ["create", "update"]
+}
+
+localData: info: """
+	## Usage
+
+	services: db: {
+		image: "ghcr.io/acorn-io/kafka:v#.#.#-#"
+	}
+
+	containers: app: {
+		image: "app-image"
+		env: {
+		  HOST: "@{@{service.}db.address}"
+		  PORT: "@{@{service.}db.port.9092}"
+		  ADMIN_USER: "@{@{service.}db.secrets.admin.username}"
+		  ADMIN_PASS: "@{@{service.}db.secrets.admin.password}"
+		}
+	}
+	"""
