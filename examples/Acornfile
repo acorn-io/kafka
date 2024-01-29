@@ -17,9 +17,9 @@ containers: {
 		}
 		consumes: ["kafka"]
 		env: {
-			KAFKA_HOST: "@{service.db.address}"
-			KAFKA_PORT: "@{service.db.port.9092}"
-			KAFKA_TOPIC: "@{service.db.data.topic}"
+			KAFKA_HOST: "@{service.kafka.address}"
+			KAFKA_PORT: "@{service.kafka.port.9092}"
+			KAFKA_TOPIC: "@{service.kafka.data.topicName}"
 		}
 		memory: 128Mi
 	}
@@ -30,9 +30,9 @@ containers: {
 		}
 		consumes: ["kafka"]
 		env: {
-			KAFKA_HOST: "@{service.db.address}"
-			KAFKA_PORT: "@{service.db.port.9092}"
-			KAFKA_TOPIC: "@{service.db.data.topic}"
+			KAFKA_HOST: "@{service.kafka.address}"
+			KAFKA_PORT: "@{service.kafka.port.9092}"
+			KAFKA_TOPIC: "@{service.kafka.data.topicName}"
 		}
 		memory: 128Mi
 	}
