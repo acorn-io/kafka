@@ -1,12 +1,9 @@
-FROM ruby:3.3.0
+FROM python:3.8
 
 WORKDIR /app
 
-COPY Gemfile Gemfile.lock ./
+COPY . /app
 
-RUN gem install bundler
-RUN bundle install
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-CMD ["ruby", "producer.rb"]
+CMD ["python", "producer.py"]
