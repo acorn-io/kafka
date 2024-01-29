@@ -87,3 +87,7 @@ Note: access to the sandbox requires only a GitHub account, which is used for au
 [![Run in Acorn](https://acorn.io/v1-ui/run/badge?image=ghcr.io+acorn-io+kafka+examples:v%23.%23.%23-%23)](https://acorn.io/run/ghcr.io/acorn-io/kafka/examples:v%23.%23.%23-%23)
 
 An application running in the Sandbox will automatically shut down after 2 hours, but you can use the Acorn Pro plan to remove the time limit and gain additional functionalities.
+
+## Disclaimer
+
+Disclaimer: You agree all software products on this site, including Acorns or their contents, may contain projects and materials subject to intellectual property restrictions and/or Open-Source license (“Restricted Items”). Restricted Items found anywhere within this Acorn or on Acorn.io are provided “as-is” without warranty of any kind and are subject to their own Open-Source licenses and your compliance with such licenses are solely and exclusively your responsibility. [MongoDB](https://mongodb.com) is licensed under Server Side Public License (SSPL) v1 which can be found [here](https://github.com/mongodb/mongo/blob/master/LICENSE-Community.txt) and Acorn.io does not endorse and is not affiliated with MongoDB. By using Acorn.io you agree to our general disclaimer here: <https://www.acorn.io/terms-of-use>.
