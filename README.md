@@ -17,7 +17,7 @@ The Acorn image of this service is hosted in GitHub container registry at [ghcr.
 The [examples folder](https://github.com/acorn-io/kafka/tree/main/examples) contains a sample application using this Service.
 
 This app consists of 2 Python containers:
-- the first one is a producer of Kafka messages
+- the first one produce a message every second. Each message has a key containing a random country code and a value containing country details 
 - the second one is a consumer of those messages
 
 In the example Acornfile  we first define a *service* property:
