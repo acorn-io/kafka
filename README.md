@@ -17,21 +17,22 @@ The Acorn image of this service is hosted in GitHub container registry at [ghcr.
 The [examples folder](https://github.com/acorn-io/kafka/tree/main/examples) contains a sample application using this Service.
 
 This app consists of 2 Python containers:
-- the first one produce a message every second. Each message has a key containing a random country code and a value containing country details 
+
+- the first one produce a message every second. Each message has a key containing a random country code and a value containing country details
 - the second one is a consumer of those messages
 
 In the example Acornfile  we first define a *service* property:
 
 ```
 services: kafka: {
-	if args.dev {
-		build: {
-			context:   "../"
-			acornfile: "../Acornfile"
-		}
-	} else {
-		image: "ghcr.io/acorn-io/kafka:v#.#.#-#"
-	}
+ if args.dev {
+  build: {
+   context:   "../"
+   acornfile: "../Acornfile"
+  }
+ } else {
+  image: "ghcr.io/acorn-io/kafka:v#.#.#-#"
+ }
 }
 ```
 
@@ -40,31 +41,31 @@ Next we define the application containers. Theses ones connect to the Kafka serv
 ```
 containers: {
 
-	consumer: {
-		build: {
-			context: "consumer"
-		}
-		consumes: ["kafka"]
-		env: {
-			KAFKA_HOST: "@{service.kafka.address}"
-			KAFKA_PORT: "@{service.kafka.port.9092}"
-			KAFKA_TOPIC: "@{service.kafka.data.topicName}"
-		}
-		memory: 128Mi
-	}
+ consumer: {
+  build: {
+   context: "consumer"
+  }
+  consumes: ["kafka"]
+  env: {
+   KAFKA_HOST: "@{service.kafka.address}"
+   KAFKA_PORT: "@{service.kafka.port.9092}"
+   KAFKA_TOPIC: "@{service.kafka.data.topicName}"
+  }
+  memory: 128Mi
+ }
 
-	producer: {
-		build: {
-			context: "producer"
-		}
-		consumes: ["kafka"]
-		env: {
-			KAFKA_HOST: "@{service.kafka.address}"
-			KAFKA_PORT: "@{service.kafka.port.9092}"
-			KAFKA_TOPIC: "@{service.kafka.data.topicName}"
-		}
-		memory: 128Mi
-	}
+ producer: {
+  build: {
+   context: "producer"
+  }
+  consumes: ["kafka"]
+  env: {
+   KAFKA_HOST: "@{service.kafka.address}"
+   KAFKA_PORT: "@{service.kafka.port.9092}"
+   KAFKA_TOPIC: "@{service.kafka.data.topicName}"
+  }
+  memory: 128Mi
+ }
 }
 ```
 
@@ -90,4 +91,4 @@ An application running in the Sandbox will automatically shut down after 2 hours
 
 ## Disclaimer
 
-Disclaimer: You agree all software products on this site, including Acorns or their contents, may contain projects and materials subject to intellectual property restrictions and/or Open-Source license (“Restricted Items”). Restricted Items found anywhere within this Acorn or on Acorn.io are provided “as-is” without warranty of any kind and are subject to their own Open-Source licenses and your compliance with such licenses are solely and exclusively your responsibility. [MongoDB](https://mongodb.com) is licensed under Server Side Public License (SSPL) v1 which can be found [here](https://github.com/mongodb/mongo/blob/master/LICENSE-Community.txt) and Acorn.io does not endorse and is not affiliated with MongoDB. By using Acorn.io you agree to our general disclaimer here: <https://www.acorn.io/terms-of-use>.
+Disclaimer: You agree all software products on this site, including Acorns or their contents, may contain projects and materials subject to intellectual property restrictions and/or Open-Source license (“Restricted Items”). Restricted Items found anywhere within this Acorn or on Acorn.io are provided “as-is” without warranty of any kind and are subject to their own Open-Source licenses and your compliance with such licenses are solely and exclusively your responsibility. [Kafka](https://kafka.apache.org) is licensed under the Apache2 license which can be found [here](https://www.apache.org/licenses/LICENSE-2.0) and Acorn.io does not endorse and is not affiliated with Apache Foundation. By using Acorn.io you agree to our general disclaimer here: <https://www.acorn.io/terms-of-use>.
